@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cassino Cósmico Infinito Protegido ++ Autodefesa</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at center, #111 0%, #000 100%);
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      user-select: none;
+    }
+    .jogo {
+      background: linear-gradient(45deg, #444, #222);
+      padding: 10px;
+      margin: 5px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+    .jogo:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #ff0;
+    }
+    #painelSocial {
+      background: rgba(50,50,50,0.8);
+      padding: 10px;
+      margin-top: 15px;
+      border-radius: 8px;
+    }
+    #painelMestre {
+      display: none;
+      background: rgba(80,0,0,0.8);
+      color: #ff6666;
+      padding: 10px;
+      margin-top: 15px;
+      border-radius: 8px;
+    }
+    button {
+      padding: 10px;
+      margin-top: 10px;
+      cursor: pointer;
+      background: #ff0;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+    #eventosGlobais {
+      margin-top:15px;
+      font-size:1.2em;
+      color:#0f0;
+      animation: piscar 1s infinite alternate;
+    }
+    @keyframes piscar {
+      from { opacity: 1; }
+      to { opacity: 0.5; }
+    }
+    .hidden-dimension {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎰 Cassino Cósmico Autodefensivo ++</h1>
+  <div>💰 Fichas: <span id="fichas">100</span></div>
+  <h2>Jogos disponíveis</h2>
+  <div id="menuJogos"></div>
+
+  <div id="painelSocial">
+    <h3>📢 Últimas vitórias</h3>
+    <div id="feedSocial"></div>
+  </div>
+
+  <div id="eventosGlobais"></div>
+
+  <button onclick="ativarMestre()">🔒 Painel do Mestre</button>
+  <div id="painelMestre" class="hidden-dimension">
+    <h3>👁‍🗨 Painel Secreto</h3>
+    <div>Rodada: <span id="mRodada">0</span></div>
+    <div>Vitórias controladas: <span id="mChance">0%</span></div>
+    <div>Perdas acumuladas: <span id="mPerdas">0</span></div>
+    <div>Gatilho atual: <span id="mGatilho">Início</span></div>
+  </div>
+
+  <audio id="somVitoria" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
+  <audio id="somPerda" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
+  <audio id="somEvento" src="https://actions.google.com/sounds/v1/cartoon/concussive_drum_hit.ogg"></audio>
+
+  <script>
+    // ===== AUTODEFESA INTELIGENTE =====
+
+    // Detecção de DevTools
+    function detectarDevTools(){
+      const start = performance.now();
+      debugger; // se DevTools aberto, mais lento
+      const duracao = performance.now()-start;
+      if(duracao>100){
+        ativarDefesa();
+      }
+    }
+    setInterval(detectarDevTools,2000);
+
+    // Defesa adaptativa que gera uma camada falsa
+    function ativarDefesa(){
+      console.warn('Tentativa de invasão detectada! Ativando camadas de defesa.');
+      document.body.innerHTML = '<h2>⚠️ Código corrompido</h2><p>Erro ao carregar. Tente novamente.</p>';
+      setTimeout(()=>{
+        // Restaura após sumir com invasor
+        location.reload();
+      },5000);
+    }
+
+    // Dimensões falsas e reais
+    const dimensaoFalsa = { codigo:"layer-fake", checksum:Math.random() };
+    Object.freeze(dimensaoFalsa);
+    const dimensaoReal = (()=>{
+      const token = btoa(Date.now().toString()+Math.random().toString());
+      return {token, ativo:true};
+    })();
+
+    // Observador para scripts estranhos
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(m=>{
+        m.addedNodes.forEach(n=>{
+          if(n.nodeName==='SCRIPT' && !n.src.includes(window.location.hostname)){
+            console.warn('Script invasor bloqueado!');
+            n.remove();
+            ativarDefesa();
+          }
+        });
+      });
+    });
+    observer.observe(document.documentElement,{childList:true,subtree:true});
+
+    // Bloqueio de teclas suspeitas
+    document.addEventListener('keydown', e=>{
+      if((e.ctrlKey&&e.shiftKey&&['I','J','C'].includes(e.key))||e.key==='F12'){
+        e.preventDefault();
+        ativarDefesa();
+      }
+    });
+
+    document.addEventListener('contextmenu',e=>e.preventDefault());
+
+    // ===== LÓGICA DO CASSINO =====
+    let fichas = 100;
+    let rodada = 0;
+    let perdasAcumuladas = 0;
+    const jogos = [];
+    const feedMensagens = [];
+    const nomesFake = ["AnaSortuda","JoaoVIP","LuckyMax","RicoRápido","MegaWinner"];
+    const eventosGlobais = [
+      "🚨 Mega Jackpot de 10.000 fichas saiu para um jogador VIP!",
+      "🔥 Evento relâmpago: Dobro de chances por 5 minutos!",
+      "💎 3 Super ganhadores simultâneos na Roleta!",
+      "🎉 Festival Cósmico: Novos jogos desbloqueados!"
+    ];
+
+    const audioVitoria=document.getElementById('somVitoria');
+    const audioPerda=document.getElementById('somPerda');
+    const audioEvento=document.getElementById('somEvento');
+
+    function gatilhoAtual(){
+      if(rodada<10) return "Vício inicial (Vitórias fáceis)";
+      if(rodada<30) return "Equilíbrio ilusório";
+      return "Perdas controladas com quase-vitórias";
+    }
+
+    function chanceManipulada(){
+      if(rodada<10) return 0.8;
+      if(rodada<30) return 0.5;
+      return 0.2;
+    }
+
+    for(let i=1;i<=100;i++){
+      jogos.push({nome:`Jogo ${i}`,desbloqueado:(i<=3)});
+    }
+
+    function renderMenu(){
+      const menu=document.getElementById('menuJogos');
+      menu.innerHTML='';
+      jogos.forEach((j,i)=>{
+        if(j.desbloqueado){
+          const div=document.createElement('div');
+          div.className='jogo';
+          div.textContent=`🎮 ${j.nome}`;
+          div.onclick=()=>jogar(i);
+          menu.appendChild(div);
+        }
+      });
+    }
+
+    function atualizarFeedSocial(){
+      const feed=document.getElementById('feedSocial');
+      feed.innerHTML=feedMensagens.slice(-5).map(m=>`<div>${m}</div>`).join('');
+    }
+
+    function simularVitoriaFake(){
+      const nome=nomesFake[Math.floor(Math.random()*nomesFake.length)];
+      const valor=Math.floor(Math.random()*500+100);
+      feedMensagens.push(`💎 ${nome} acabou de ganhar ${valor} fichas!`);
+      atualizarFeedSocial();
+    }
+    setInterval(simularVitoriaFake,3000);
+
+    function eventoGlobal(){
+      const evento=eventosGlobais[Math.floor(Math.random()*eventosGlobais.length)];
+      document.getElementById('eventosGlobais').textContent=evento;
+      audioEvento.play();
+    }
+    setInterval(eventoGlobal,15000);
+
+    function jogar(index){
+      rodada++;
+      fichas-=5;
+      const vitoria=Math.random()<chanceManipulada();
+      if(vitoria){
+        fichas+=20; audioVitoria.play();
+      } else {
+        perdasAcumuladas+=5; audioPerda.play();
+      }
+
+      if(rodada%5===0){
+        const proximo=jogos.find(j=>!j.desbloqueado);
+        if(proximo){
+          proximo.desbloqueado=true;
+          feedMensagens.push(`🎉 Novo jogo desbloqueado: ${proximo.nome}!`);
+          atualizarFeedSocial();
+        }
+      }
+
+      document.getElementById('fichas').textContent=fichas;
+      document.getElementById('mRodada').textContent=rodada;
+      document.getElementById('mChance').textContent=(chanceManipulada()*100).toFixed(0)+'%';
+      document.getElementById('mPerdas').textContent=perdasAcumuladas;
+      document.getElementById('mGatilho').textContent=gatilhoAtual();
+
+      if(fichas<=0){
+        fichas=50;
+        feedMensagens.push('🆓 Bônus de 50 fichas para continuar jogando!');
+        atualizarFeedSocial();
+      }
+    }
+
+    function ativarMestre(){
+      const senha=prompt("Senha do mestre:");
+      if(senha===dimensaoReal.token.slice(0,6)||senha==="1234"){
+        document.getElementById('painelMestre').classList.remove('hidden-dimension');
+      } else {
+        alert("Senha incorreta!");
+      }
+    }
+
+    renderMenu();
+    atualizarFeedSocial();
+  </script>
+</body>
+</html>
